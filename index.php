@@ -38,7 +38,7 @@
             <div class="col-md-12">
                 <table class="table">
                     <thead>
-                        <tr>
+                        <tr id="lista">
                             <th scope="col">Nome</th>
                             <th scope="col">Data</th>
                             <th scope="col">CPF</th>
@@ -48,8 +48,8 @@
                             <th scope="col">Ação</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
+                    <tbody id="tabela">
+                        <tr >
                             <th scope="row">...</th>
                             <td>...</td>
                             <td>...</td>
@@ -65,11 +65,77 @@
             </div>
         </div>
     </div>
-
-
     <!-- JS Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        var xmlhttp = new XMLHttpRequest();     
+        var str = "";
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                myObj = JSON.parse(this.responseText);
+                for(var i = 0;i < myObj.length;i++)
+                {
+                    str += "<tr><th scope=\"row\" id=\"nm_cliente\">"+myObj[i].nome+"</th>"+
+                            "<td scope=\"\" id=\"dt_nasc\">"+myObj[i].data_nasc+"</td>"+
+                            "<td scope=\"\" id=\"nr_cpf\">"+myObj[i].cpf+"</td>"+
+                            "<td scope=\"\" id=\"nr_rg\">"+myObj[i].rg+"</td>"+
+                            "<td scope=\"\" id=\"nm_email\">"+myObj[i].email+"</td>"+
+                            "<td scope=\"\" id=\"nr_celular\">"+myObj[i].celular+"</td>"+
+                            "<td><button type=\"button\" class=\"btn btn-primary btn-sm\" onclick=\"detalhes("+i+")\">Detalhes</button></td></tr><br><br>";
+                    
+
+                }
+                document.getElementById("tabela").innerHTML = str;
+            }
+        };
+        xmlhttp.open("GET", "array.json", true);
+        xmlhttp.send();
+
+        function detalhes(id)
+       {
+           switch(id)
+           {
+               case 0: 
+                    mostrarClientes(0);
+               break
+               case 1: 
+                    mostrarClientes(1);
+               break
+               case 2: 
+                mostrarClientes(2);
+               break
+               case 3: 
+                mostrarClientes(3);
+               break
+               case 4: 
+                mostrarClientes(4);
+               break
+               case 5: 
+                mostrarClientes(5);
+               break
+               case 6: 
+                mostrarClientes(6);
+               break
+               case 7: 
+                mostrarClientes(7);
+               break
+               case 8: 
+                mostrarClientes(8);
+               break
+               case 9: 
+                mostrarClientes(9);
+               break
+               default: alert("ERROR");
+           }
+       }
+
+       function mostrarClientes(nr)
+       {
+           alert("Nome: " + myObj[nr].nome + " \nData Nasc: "+myObj[nr].data_nasc+"\n CPF: "+myObj[nr].cpf
+           +"\n RG: "+myObj[nr].rg+"\n Email: "+myObj[nr].email+"\n Cel: "+myObj[nr].celular);
+       }
+    </script>
 </body>
 </html>
